@@ -27,7 +27,7 @@ def greedy_search(start):
     dist = None
     for nx, ny in neighbours:
         if (nx >= 0 and nx < shape and ny >= 0 and ny < shape) and grid[nx][ny] == 0:
-            dist = np.sqrt((nx-goal[0])**2+(ny-goal[1])**2)
+            dist = abs(nx-goal[0])+abs(ny-goal[1])
             if dist < min_:
                 min_ = dist
                 next_max = (nx, ny)
