@@ -10,12 +10,13 @@ high = 800
 screen_color = (49, 150, 100)
 line_color = (255, 255, 255)
 FBS = 60
-shape = 20
+shape = 40
 # barrier = np.random.randint(0, shape, size=(shape, 1, 2))
 grid = np.zeros((shape, shape))
 screen = pygame.display.set_mode((high, width))
 path = []
 goal = np.random.randint(0, shape, (1, 2))[0]
+
 
 def bfs(grid, start):
     # if grid[start] == 1:
@@ -23,22 +24,14 @@ def bfs(grid, start):
     m, n = len(grid), len(grid[0])
     queue, visited, steps = deque(), set(), 1
     visited.add(start)
-    queue.append(start)
+    queue.append((start,))
     while queue:
         # print(queue)
         path = queue.popleft()
-        if (len(path) == 2):
-            x, y = path
-        else:
-            x, y = path[-1]
+        x, y = path[-1]
         neighbours = [(x-1, y), (x, y+1),
                       (x, y-1), (x+1, y)]
         if (x, y) == (goal[0], goal[1]):
-            try:
-                path = path[1:]
-                path[0] = start
-            except:
-                print(path)
             return path
         for nx, ny in neighbours:
             if nx >= 0 and nx < m and ny >= 0 and ny < n and (nx, ny) not in visited and grid[nx][ny] == 0:
@@ -47,7 +40,6 @@ def bfs(grid, start):
                 queue.append(new_path)
                 visited.add((nx, ny))
     return []
-
 
 
 def drawLine(screen, color, shape):
